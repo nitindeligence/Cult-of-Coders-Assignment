@@ -1,0 +1,1 @@
+import '/imports/startup/client'; //imports all files present in the client folder of imports/startup
