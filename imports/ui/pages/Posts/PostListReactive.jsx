@@ -1,5 +1,5 @@
 import React from 'react';
-import {withTracker} from 'meteor/react-meteor-data';PostListReactive.jsx
+import {withTracker} from 'meteor/react-meteor-data';
 import {Posts} from '/db';
 
 
@@ -11,13 +11,13 @@ class PostListReactive extends React.Component {
     render() {
         const {posts, history} = this.props;
 
-        if (!posts) {PostListReactive.jsx
+        if (!posts) {
             return <div>Loading....</div>
         }
-PostListReactive.jsx
+
         return (
             <div className="post">
-                {PostListReactive.jsx
+                {
                     posts.map((post) => {
                         return (
                             <div key={post._id}>

@@ -22,6 +22,9 @@ Meteor.methods({
     'post.get' (_id) {
         return Posts.findOne(_id);//returns only one result for the post
     },
+    'post.updateview' (_id) {
+       Posts.update({_id:_id},{$inc:{views:1}});//increase view by 1 
+    },
     'post.getwithview' (_id) {
        Posts.update({_id:_id},{$inc:{views:1}});//increase view by 1 
        return Posts.findOne(_id);

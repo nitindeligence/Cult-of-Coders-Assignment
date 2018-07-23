@@ -1,21 +1,22 @@
 import React from 'react';
-import {AutoForm, AutoField, LongTextField,SelectField} from 'uniforms-unstyled';
+import {AutoForm, AutoField, LongTextField,SelectField,ErrorsField} from 'uniforms-unstyled';
 import PostSchema from '/db/posts/schema';
 
 export default class PostCreate extends React.Component {
     constructor() {
         super();
     }
-
+    componentDidMount() {
+    if (!Meteor.userId()) {this.props.history.push('/login');}
+    }
+    
     submit = (post) => {
-        Meteor.call('post.create', post, (err) => {
-         //calls post.edit method from api/posts/methods.js for updating post details against given id
+        Meteor.call('secured.post_create', post, (err) => {
             if (err) {
                 return alert(err.reason);
             }
             else{ 
             this.props.history.push('/posts');
-            //redirects the page to post list if post insertion is successfull
             }
         });
     };
@@ -26,6 +27,7 @@ export default class PostCreate extends React.Component {
         return (
             <div className="post">
                 <AutoForm onSubmit={this.submit} schema={PostSchema}>
+                <ErrorsField/>
                <AutoField name="title" className="form-control"/>
                <LongTextField name="description" className="form-control" />             
                 <SelectField name="type" options={typeArray} />

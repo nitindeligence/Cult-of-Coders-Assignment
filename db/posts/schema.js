@@ -14,6 +14,6 @@ export default new SimplSchema({
 	},
     userId: {
         type: String,
-        optional: true // if true than login of user is not required.
+        optional: true 
     }
 });
