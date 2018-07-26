@@ -32,14 +32,14 @@ export default class CommentList extends React.Component {
                             <p>Commented By :{ comment.useremail}</p>
                             {(Meteor.userId()==comment.userId||Meteor.userId()==postuser)? (<button onClick={() => {if (window.confirm('Are you sure you wish to delete this post?')) this.DeleteComment(comment._id);}}>Remove Comment</button>) : ''}
                             </div>
-                        )
+                        )/pages/post
                         }) 
                     }  
                 </div>
                 )
             }
             else{
-                    return (<div>ggg</div>);
+                    return (" ");
             }
     }
 }
