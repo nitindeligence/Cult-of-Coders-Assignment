@@ -11,12 +11,10 @@ componentDidMount() {
     Meteor.call('post.updateview',this.props.match.params._id);
     }
 submit = (comin) => { 
-    Meteor.call('secured.comment_insert',comin,this.props.post._id,(err) => {
-        if (err) {return alert(err.reason);}
-        else{        
-            }
-        });
-    };
+    this.formRef.reset();
+    Meteor.call('secured.comment_insert',comin,this.props.match.params._id,(err) =>{
+     if (err){return alert(err.reason); }});
+  };
 render() {
         const { history,post,noofcomments } = this.props;
         if(post)
@@ -33,7 +31,7 @@ render() {
                 <CommentList {...this.props} />
                 { Meteor.userId()? 
                     <div className="comin">
-                        <AutoForm onSubmit={this.submit} schema={CommentSchema}>
+                        <AutoForm onSubmit={this.submit.bind(this)} ref={(ref) => this.formRef = ref} schema={CommentSchema}>
                         <ErrorsField/>
                     <LongTextField name="comment" ref="comment"/>            
                         <button type='submit'>Add Comment</button>
