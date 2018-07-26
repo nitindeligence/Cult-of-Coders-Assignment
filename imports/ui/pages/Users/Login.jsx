@@ -1,12 +1,17 @@
 import React from 'react';
 import {AutoForm, AutoField, ErrorsField} from 'uniforms-unstyled';
 import SimpleSchema from 'simpl-schema';
-
+import { browserHistory } from 'react-router';
 export default class Login extends React.Component {
     constructor() {
         super();
     }
+    componentWillMount() {
+        if(Meteor.userId()){
+            this.props.history.push('/posts');
+            }
 
+        }
     handleLogin = (data) => {
         const {email, password} = data;
         Meteor.loginWithPassword(email, password, (err) => {
@@ -17,8 +22,8 @@ export default class Login extends React.Component {
         });
     };
 
-    render() {
-        if(!Meteor.userId()){
+    render() { 
+        
             return (
                 <div className="authentication">
                     <AutoForm onSubmit={this.handleLogin} schema={LoginSchema}>
@@ -28,10 +33,8 @@ export default class Login extends React.Component {
                         <button type="submit">Login</button>
                     </AutoForm>
                 </div>
-
             )
-        }
-        else { return this.props.history.push('/posts');}
+
     }
 }
 
