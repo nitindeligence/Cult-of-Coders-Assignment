@@ -37,7 +37,15 @@ export default class CommentList extends React.Component {
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({ CommentList: nextProps.commentdata.cmt });
     }
+<<<<<<< HEAD
     render()
+=======
+    DeleteComment(commentId){
+        Meteor.call('secured.deletecomment', commentId,(err)=>{ if(err) {alert(err	3rd assignment.reason);}});
+        //deletes the comment
+    }
+    render() 
+>>>>>>> 3da9072517b68c86ca057eaf6e9fab45031ddb85
     {
         const CommentList = this.state.CommentList;
         const postuser=this.state.postuser;
