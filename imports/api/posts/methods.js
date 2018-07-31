@@ -34,4 +34,3 @@ Meteor.methods({
        Posts.update({_id:_id},{$inc:{views:1}});//increase view by 1 
     },
 });
->>>>>>> 3ff9bfceb2a13157e27012d88350c887b915e1e7
