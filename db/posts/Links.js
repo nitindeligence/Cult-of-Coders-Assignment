@@ -4,7 +4,7 @@ import Users from '/db/users/collection.js';
 Posts.addLinks({
     'author': {
         type: 'one',
-        collection: Meteor.users,
+        collection: Users,
         field: 'userId',
     },
     'cmt': {

@@ -1,7 +1,8 @@
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from 'meteor/meteor';
 import {Posts} from '/db';
 
 Meteor.methods({
+
     'post.create'(post) {
         Posts.insert(post);//inserts new posts
     },
@@ -19,14 +20,12 @@ Meteor.methods({
             }
         });
     },
+
     'post.get' (_id) {
         return Posts.findOne(_id);//returns only one result for the post
     },
+
     'post.updateview' (_id) {
-       Posts.update({_id:_id},{$inc:{views:1}});//increase view by 1 
-    },
-    'post.getwithview' (_id) {
-       Posts.update({_id:_id},{$inc:{views:1}});//increase view by 1 
-       return Posts.findOne(_id);
+        Posts.update({_id:_id},{$inc:{views:1}});//increase no of post view by 1
     },
 });

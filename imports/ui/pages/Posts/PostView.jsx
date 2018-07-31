@@ -1,65 +1,74 @@
 import React from 'react';
+import { ReactiveVar } from 'meteor/reactive-var'
 import { withTracker } from 'meteor/react-meteor-data';
-import {AutoForm,LongTextField,ErrorsField} from 'uniforms-unstyled';
-import CommentSchema from '/db/comments/schema';
-import Security  from '/imports/api/security.js';
-import { Posts, Comments } from '/db';
-import ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
+//import {AutoForm,LongTextField,ErrorsField} from 'uniforms-unstyled';
+//import CommentSchema from '/db/comments/schema';
 import CommentList from './CommentList';
+import {Meteor} from 'meteor/meteor';
+import PropTypes from 'prop-types';
+import CommentCreateBtn from './CommentCreateBtn';
+
 class PostView extends React.Component {
-  constructor() {
-  super();
-  this.state = {postd: null};
-  }
+    constructor() {
+        super();
+        this.state = {post: null};
+        this.redirecttoPost.bind(this);
+        this.redirectLogout.bind(this);
+    }
 
-  componentDidMount() {
-  Meteor.call('post.updateview',this.props.match.params._id);
-  //increase the view by one
-  }
+    componentDidMount() {
+        Meteor.call('secured.updateviews',this.props.match.params._id);//increase the view by one
+    }
 
-  submit = (comin) => { 
-    this.formRef.reset();//reset the form
-    Meteor.call('secured.comment_insert',comin,this.props.match.params._id,(err) =>{
-     if (err){return alert(err.reason); }});
-  };
+    redirecttoPost = () => {
+        if(this.props.history)
+            this.props.history.push('/posts');
+    }
 
-  render() {
-    const { post,history } = this.props;
-    if(this.state.post){this.props.post = this.state.post;}
-    if(!post){ 
-        return <div>Loading....</div>
-    }else{
-        return(
+    redirectLogout = () => {
+        if(this.props.history)
+            Meteor.logout(() => this.props.history.push('/login'));
+    }
+
+    render() {
+        const { post } = this.props;
+        if(this.state.post){this.props.post = this.state.post;}
+        if(!post){
+            return <div>Loading....</div>
+        }else{
+            return(
                 <div className="post">
-                {
-                post.map((post) => {
-                return(
-                        <div key={post._id}>
-                            <p>Post id: {post._id} </p>
-                            <p>Type : { post.type}</p>
-                            <p>Post title:{post.title},Post Description:{post.description}</p>
-                            <p>Views : {post.views } </p>
-                            <p> Total Comments: {post.cmt ? _.size(post.cmt) : 0}</p>
-                            { Meteor.userId()? 
-                                <div className="comin">
-                                <AutoForm onSubmit={this.submit.bind(this)} ref={(ref) => this.formRef = ref} schema={CommentSchema}>
-                                <ErrorsField/>
-                                    <LongTextField name="comment" ref="comment"/>            
-                                    <button type='submit'>Add Comment</button>
-                                </AutoForm>
-                                </div>:""}
-                            <CommentList commentdata={post} />
-                            <button onClick={() => {this.props.history.push("/posts")}}>Back to listing</button> 
-                        </div>
-                      )
-                    })
-                }
+                    {
+                        post.map((post) => {
+                            return(
+                                <div key={post._id}>
+                                    <p>Post id: {post._id} </p>
+                                    <p>Type : { post.type}</p>
+                                    <p>Post title:{post.title},Post Description:{post.description}</p>
+                                    <p>Views : {post.views } </p>
+                                    <p> Total Comments: {post.cmt ? post.cmt.length : 0}</p>
+                                    <CommentCreateBtn  postId={post._id}/>
+                                    <CommentList commentdata={post} />
+                                    <button onClick={ this.redirecttoPost }>Back to listing </button>
+                                    {Meteor.user() ? (<div><button onClick={ this.redirectLogout }>Logout</button></div>): ''}
+                                </div>
+                            )
+                        })
+                    }
                 </div>
-        )
+            )
         }
     }
 }
+
+PostView.propTypes = {
+    history: PropTypes.object,
+    post:PropTypes.array,
+    postId:PropTypes.string,
+    match: PropTypes.object,
+    params: PropTypes.func,
+    _id: PropTypes.string,
+};
 
 const pd = new ReactiveVar([]);
 export default withTracker(props => {
@@ -72,6 +81,6 @@ export default withTracker(props => {
     return {
         loading: !handle.ready(),
         post: pd.get(),
-        ...props    
+        ...props
     };
 })(PostView);

@@ -1,40 +1,56 @@
 import React from 'react';
+import {Meteor} from 'meteor/meteor';
+import PropTypes from 'prop-types';
 import {AutoForm, AutoField, LongTextField,SelectField,ErrorsField} from 'uniforms-unstyled';
 import PostSchema from '/db/posts/schema';
-
+import { PostTagsLabels } from '/db/posts/enums/tags';
 export default class PostCreate extends React.Component {
     constructor() {
         super();
+        this.redirecttoLogout.bind(this);
+        this.bacttoPostList.bind(this);
     }
     componentDidMount() {
-    if (!Meteor.userId()) {this.props.history.push('/login');}
+        if (!Meteor.userId()) {this.props.history.push('/login');}
     }
     
+    redirecttoLogout = () => {
+        if(this.props.history)
+            Meteor.logout(() => this.props.history.push('/login'));
+    }
+
+    bacttoPostList = () => {
+        if(this.props.history)
+            this.props.history.push('/posts');
+    }
+
     submit = (post) => {
         Meteor.call('secured.post_create', post, (err) => {
             if (err) {
                 return alert(err.reason);
-            }
-            else{ 
-            this.props.history.push('/posts');
+            }else{
+                this.props.history.push('/posts');
             }
         });
     };
 
     render() {
-        const {history} = this.props;
-        const typeArray = [{ label: "Select Type", value: " " },{ label: "Nature", value: "Nature" }, { label: "Psychology", value: "Psychology" },{label : 'Music',value:'Music'},{label: 'Programming' , value : 'Programming'},{label: 'Project Management' , value : 'Project Management'},{label: 'Other' , value : 'Other'}];
         return (
             <div className="post">
                 <AutoForm onSubmit={this.submit} schema={PostSchema}>
-                <ErrorsField/>
-               <AutoField name="title" className="form-control"/>
-               <LongTextField name="description" className="form-control" />             
-                <SelectField name="type" options={typeArray} />
+                    <ErrorsField/>
+                    <AutoField name="title" className="form-control"/>
+                    <LongTextField name="description" className="form-control" />
+                    <SelectField name="type" options={PostTagsLabels} />
                     <button type='submit'>Add post</button>
-                    <button onClick={() => history.push('/posts')}>Back to posts</button>
+                    <button onClick={ this.bacttoPostList }>Back to posts</button>
                 </AutoForm>
+                <button onClick={ this.redirecttoLogout }>Logout</button>
             </div>
         )
     }
 }
+
+PostCreate.propTypes = {
+    history: PropTypes.object,
+};

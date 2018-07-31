@@ -1,7 +1,8 @@
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from 'meteor/meteor';
 import {Comments} from '/db';
 
 Meteor.methods({
+    
     'comment.insert'(comment) {
         Comments.insert(comment);//inserts new comment
     },
@@ -17,6 +18,7 @@ Meteor.methods({
             }
         });
     },
+
     'comment.remove' (_id) {
         return Comments.remove(_id);//deletes comments with specified Id
     },

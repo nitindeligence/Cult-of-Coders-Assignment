@@ -18,7 +18,6 @@ export default () =>
         <Route exact path="/posts/create" component={PostCreate} />
         <Route exact path="/posts/edit/:_id" component={PostEdit} />
         <Route exact path="/posts/view/:_id" component={PostView} />
-
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
     </App>

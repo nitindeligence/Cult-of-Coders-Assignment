@@ -1,6 +1,7 @@
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from 'meteor/meteor';
 
 Meteor.methods({
+    
     'find.random_number'(min, max) {
         if (!min) min = 0;
         if (!max) max = 100;

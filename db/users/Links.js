@@ -6,10 +6,10 @@ Users.addLinks({
     'posts': {
         collection: Posts,
         inversedBy: 'author',
-        autoremove: true
+        autoremove: true,
     },
     'comments': {
-    	collection: Comments,
-        inversedBy: 'user',       
+        collection: Comments,
+        inversedBy: 'user',
     },
 });

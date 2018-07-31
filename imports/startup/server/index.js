@@ -7,5 +7,5 @@ import '/imports/api/posts/publications';
 import '/imports/api/comments/methods';
 import '/imports/api/comments/publications';
 import '/imports/api/comments/securedMethods';
-
+import '/imports/api/posts/services';
 

@@ -5,7 +5,7 @@ import Posts from '/db/posts/collection.js';
 Comments.addLinks({
     'user': {
         type: 'one',
-        collection: Meteor.users,
+        collection: Users,
         field: 'userId',
     },
     'clt': {

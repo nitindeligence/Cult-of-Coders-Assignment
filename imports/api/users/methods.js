@@ -1,4 +1,4 @@
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from 'meteor/meteor';
 import {Users} from '/db';
 
 Meteor.methods({
@@ -12,7 +12,7 @@ Meteor.methods({
 
         Accounts.createUser({
             email: data.email,
-            password: data.password
+            password: data.password,
         });
     }
 });
