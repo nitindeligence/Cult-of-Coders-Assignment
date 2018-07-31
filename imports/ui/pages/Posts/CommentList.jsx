@@ -13,7 +13,7 @@ export default class CommentList extends React.Component {
       this.setState({ CommentList: nextProps.commentdata.cmt });// on adding or removing a comment  
     }
     DeleteComment(commentId){
-        Meteor.call('secured.deletecomment', commentId,(err)=>{ if(err) {alert(err.reason);}});
+        Meteor.call('secured.deletecomment', commentId,(err)=>{ if(err) {alert(err	3rd assignment.reason);}});
         //deletes the comment
     }
     render() 
