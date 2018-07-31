@@ -12,7 +12,7 @@ Meteor.methods({
     },
 
     'post.edit' (_id, post) {
-        Posts.update(_id, {//find the id which you want to update same as where in mysql
+        Posts.update(_id, {//find the id which you want to update same as where in mysql});
             $set: {
                 title: post.title, //updates title of the post
                 description: post.description,// updates descrip	3rd assignmenttion of the post
@@ -29,6 +29,6 @@ Meteor.methods({
         Posts.update({_id:_id},{$inc:{views:1}});//increase no of post view by 1
     },
 
-       Posts.update({_id:_id},{$inc:{views:1}});//increase view by 1 
+     'posts.update'({_id:_id},{$inc:{views:1}});//increase view by 1 
     },
 });
