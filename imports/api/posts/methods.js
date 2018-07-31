@@ -26,10 +26,3 @@ Meteor.methods({
        Posts.update({_id:_id},{$inc:{views:1}});//increase view by 1 
     },
 });
-'post.getwithview' (_id) {
-29
-       Posts.update({_id:_id},{$inc:{views:1}});//increase view by 1 
-30
-       return Posts.findOne(_id);
-31
-    },
