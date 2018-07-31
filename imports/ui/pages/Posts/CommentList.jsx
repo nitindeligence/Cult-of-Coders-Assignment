@@ -46,6 +46,7 @@ export default class CommentList extends React.Component {
                 <div className="postcmts">
                     {
                         CommentList.map((comment) => {
+<<<<<<< HEAD
                             return (
                                 <div key={comment._id}>
                                     <p>Comment id:{ comment._id } </p>
@@ -66,6 +67,24 @@ export default class CommentList extends React.Component {
         else{
             return ('');
         }
+=======
+                        return (
+                            <div key={comment._id}>
+                            <p>Comment id:{ comment._id } </p>
+                            <p>Comment :{ comment.comment}</p>
+                            <p>Commented By :{ comment.useremail}</p>
+                            {(Meteor.userId()==comment.userId||Meteor.userId()==postuser)? (<button onClick={() => {if (window.confirm('Are you sure you wish to delete this post?')) this.DeleteComment(comment._id);}}>Remove Comment</button>) : ''}
+                            </div>
+                        )/pages/post
+                        }) 
+                    }  
+                </div>
+                )
+            }
+            else{
+                    return (" ");
+            }
+>>>>>>> 3ff9bfceb2a13157e27012d88350c887b915e1e7
     }
 }
 
